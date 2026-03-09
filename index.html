@@ -165,7 +165,6 @@
           object-fit: cover !important;
           display: block !important;
           filter: grayscale(100%);
-          transition: filter 1s ease-in-out;
         }
         #portfolio .overflow-hidden:hover img {
           filter: grayscale(0%);
@@ -1342,6 +1341,16 @@
       });
     });
   })();
+
+  // Portfolio : ajouter la transition filter après le premier paint
+  // Évite le bug GPU compositor Android Chrome / iOS Safari (image blanche au load)
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      document.querySelectorAll('#portfolio .overflow-hidden img').forEach(function(img) {
+        img.style.transition = 'filter 1s ease-in-out';
+      });
+    });
+  });
 
 </script>
 </body></html>
