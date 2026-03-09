@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edition 26 | Interior Architecture &amp; Design</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4A3728",
+                        "primary-light": "#705743",
+                        "background-light": "#F7F5F2",
+                        "background-dark": "#1A1A1A",
+                        "neutral-soft": "#E5E1DD",
+                        "stone-warm": "#D7D2CB"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0", "lg": "0", "xl": "0", "full": "0"},
+                },
+            },
+        }
+    </script>
+<style>
+        .scroll-smooth { scroll-behavior: smooth; }
+        .editorial-spacing { letter-spacing: 0.05em; }
+        .image-overlay { background: linear-gradient(to bottom, rgba(17,33,28,0) 0%, rgba(17,33,28,0.4) 100%); }
+
+        /* ── RESPONSIVE ─────────────────────────────────── */
+
+        /* Contact : grille 2 col → 1 col sur mobile */
+        #contact .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: start;
+        }
+        @media (max-width: 900px) {
+          #contact .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+          #contact .contact-grid > div:first-child {
+            max-width: 100%;
+          }
+        }
+
+        /* Contact : padding responsive */
+        #contact .contact-inner {
+          padding: 100px 60px;
+        }
+        @media (max-width: 768px) {
+          #contact .contact-inner { padding: 60px 24px; }
+        }
+
+        /* Nav mobile : masquer liens sur petit écran (burger déjà prévu) */
+        @media (max-width: 768px) {
+          #main-header .max-w-7xl { padding: 0 20px; }
+        }
+
+        /* Hero logo : plus petit sur mobile */
+        @media (max-width: 640px) {
+          #hero img[src="logo.png"] { width: 85vw !important; }
+          #hero h2 { font-size: 9px !important; }
+          #hero p  { font-size: 0.9rem !important; }
+        }
+
+        /* Manifesto : réduire py et taille titre */
+        @media (max-width: 768px) {
+          #manifesto { padding-top: 80px !important; padding-bottom: 80px !important; }
+          #manifesto h2 { font-size: 2.4rem !important; line-height: 1.2 !important; }
+        }
+
+        /* Portfolio : pas de col-start complexe sur mobile */
+        @media (max-width: 1024px) {
+          #portfolio .grid { gap: 48px; }
+          #portfolio .lg\:col-start-9,
+          #portfolio .lg\:col-start-4 { grid-column: span 12 !important; margin-top: 0 !important; }
+          #portfolio img { height: 55vw !important; }
+        }
+
+        /* Process : réduire les numéros géants sur mobile */
+        @media (max-width: 768px) {
+          #process .text-\[15rem\] { font-size: 6rem !important; }
+          #process h4 { font-size: 1.6rem !important; }
+          #process p  { font-size: 1rem !important; }
+          #process { padding-top: 60px !important; padding-bottom: 60px !important; }
+          #process .space-y-48 { gap: 60px !important; }
+          #process .space-y-48 > div { gap: 16px !important; }
+        }
+
+        /* About : réduire lettre VB sur mobile */
+        @media (max-width: 768px) {
+          #about .text-\[20rem\] { font-size: 8rem !important; }
+          #about h3 { font-size: 2.5rem !important; }
+          #about { padding-top: 60px !important; padding-bottom: 60px !important; }
+        }
+
+        /* Slider avant/après : labels repositionnés */
+        @media (max-width: 640px) {
+          #avant-apres { height: 60vw; min-height: 260px; }
+          #ba-slider { height: 100% !important; }
+          #ba-handle .w-12 { width: 36px !important; height: 36px !important; }
+        }
+
+        /* Stats section */
+        @media (max-width: 640px) {
+          #about .mt-16.flex { flex-wrap: wrap; gap: 24px; }
+          .stat-counter { font-size: 2rem !important; }
+        }
+
+        /* Témoignages */
+        @media (max-width: 768px) {
+          #about + section .grid { gap: 32px; }
+        }
+
+        /* Footer */
+        @media (max-width: 640px) {
+          footer .flex-col { gap: 32px; }
+          footer .gap-20 { gap: 24px; }
+        }
+
+        /* Curseur custom désactivé sur touch */
+        @media (hover: none) {
+          #custom-cursor, #cursor-ring { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-slate-100 scroll-smooth">
+<!-- Top Navigation -->
+<header id="main-header" class="fixed top-0 w-full z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/5" style="opacity:0;pointer-events:none;transform:translateY(-100%);">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center">
+<img alt="Edition 26 icone" class="h-10 w-auto" src="icone.png"/>
+</div>
+<nav class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#portfolio">Portfolio</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#process">Process</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#services">Services</a>
+<a class="text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest" href="#about">À Propos</a>
+<a class="border border-primary text-primary px-6 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-all" href="#contact">Démarrer votre projet</a>
+</nav>
+<button class="md:hidden p-2 text-primary" aria-label="Menu">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<div id="hero-pin" style="position:relative; height:100vh; overflow:hidden;">
+
+<!-- Intro screen : logo sur fond uni -->
+<div id="intro-screen" style="position:absolute;inset:0;z-index:20;background:#F7F5F2;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+  <img id="intro-logo" src="icone.png" alt="Edition 26" style="width:180px;height:auto;will-change:transform;"/>
+</div>
+
+<section id="hero" class="relative h-screen flex items-center justify-center" style="opacity:0;will-change:opacity;">
+<div class="absolute inset-0 z-0">
+<img alt="Minimalist luxury living room" class="w-full h-full object-cover" data-alt="Minimalist luxury living room with neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC7Uyz_L7qiEtDcw7j1gPoCb23Bc3Q0cMZN-2JvGqH03GfCiIr9LOkhUcM-vftG-iFguBms_8TMiZMiVSXy7NRyYAlrG2IJwLk4PMnuBltUjFx4Qp6tS_qbdsRHmScx9ePr0Y5Zewry3A-CT_jcV6tt4wkoHTjmkVEXa-Kou-hisiLOsSuNmwTbv23YdoslOWT99MifJU1zC8-VuoCwSB8SYPekFUZ2Q49jy-ACcfgowv6cK_6cE5hCe_cjoiAp1KV4vE3iz8xaA"/>
+<div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
+</div>
+<div class="relative z-10 text-center w-full flex flex-col items-center px-6">
+<h2 class="text-white text-[10px] font-bold uppercase tracking-[0.5em] mb-6" style="text-shadow:0 1px 8px rgba(0,0,0,0.6);">Studio d'Architecture &amp; Design</h2>
+<img alt="Edition 26" class="brightness-0 invert" style="width:min(860px,75vw);height:auto;" src="logo.png"/>
+<p class="text-white/90 font-light italic mt-4" style="font-size:clamp(1rem,1.8vw,1.4rem);text-shadow:0 1px 6px rgba(0,0,0,0.5);">
+                L'essence du luxe dans la simplicité absolue.
+            </p>
+<a class="inline-block border border-white text-white text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all mt-6" style="padding:clamp(12px,1.8vh,20px) clamp(28px,4vw,48px);" href="#contact">
+                Explorer le projet
+            </a>
+</div>
+</section>
+</div>
+<!-- Manifesto Section -->
+<section id="manifesto" class="py-48 px-10 md:px-24 bg-white">
+<div class="max-w-6xl mx-auto">
+<div class="flex flex-col md:flex-row gap-20">
+<div class="w-full md:w-1/3">
+<span class="text-primary font-bold tracking-[0.6em] text-[10px] uppercase mb-12 block">Manifesto</span>
+<div class="h-px w-24 bg-primary/20"></div>
+</div>
+<div class="w-full md:w-2/3">
+<h2 class="text-5xl md:text-7xl font-light leading-tight text-slate-900">
+                La <span class="font-medium">justesse</span> des volumes, le silence des matières.
+            </h2>
+<p class="mt-12 text-xl text-slate-500 max-w-xl font-light leading-relaxed">
+                Notre philosophie repose sur l'équilibre délicat entre la lumière et l'espace pour créer un <span class="italic">minimalisme chaleureux</span> qui transcende les époques.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Portfolio Grid -->
+<section class="py-32 px-10 md:px-24 bg-[#FBF9F7]" id="portfolio">
+<div class="max-w-screen-2xl mx-auto">
+<div class="mb-32 relative">
+<h3 class="text-8xl md:text-[12rem] font-black uppercase tracking-tighter opacity-[0.03] absolute left-0 -mt-16 pointer-events-none">Selected</h3>
+<div class="relative z-10 flex justify-between items-end">
+<h3 class="text-6xl font-bold uppercase tracking-tighter">Portfolio</h3>
+<p class="max-w-xs text-slate-400 text-xs uppercase tracking-[0.2em] font-medium leading-loose">
+                    Archives de résidences privées.
+                </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-24">
+<!-- Item 1: Large offset -->
+<div class="md:col-span-12 lg:col-span-7">
+<div class="group cursor-pointer">
+<div class="overflow-hidden">
+<img class="w-full h-[80vh] object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD1qXnjU1BSTWFyBo6qxmGgbdm7cYAMbFGk8l1K_Xx6N8uuiy9mB7BEuJAnozPN_Je6qCTiQmuPckgrCGQUk8_pzFT2ZNo_lIOqXz1F-M2l3-ZCWS_L-hbURFwcyJAziPgDXfh64fbZvUgw12j6HitWYcvBS_CAJXx8tV-F9yayb8nO0Y7cnVFcDO7Zziz_dWGa6MlCcbv03G-x_o0fECg0hOPut58pxQmi5A5fsQS62v40UABbzxLQLNb47H620X5ip7MSVEkYQ"/>
+</div>
+<div class="mt-8 flex justify-between items-start">
+<div>
+<h4 class="text-2xl font-bold uppercase tracking-tight">Appartement Haussmannien</h4>
+<p class="text-xs text-slate-400 uppercase tracking-widest mt-2">Geneva, CH</p>
+</div>
+<span class="text-xs font-bold tracking-widest">01</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Smaller, right-aligned -->
+<div class="md:col-span-12 lg:col-span-4 lg:col-start-9 lg:mt-48">
+<div class="group cursor-pointer">
+<div class="overflow-hidden aspect-[3/4]">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCufy2bbCCHcCsnrpYKdypcRLaIl_dlkoSh-Eegq4uOt5UOp9pVgb5ZhtJMqKrc6XzpHClAwLC6WZ89WkUCSq32OYp3-D-NliPahel7C5H-z0lF94aQjNXQxfu3ItPZXM489NJpZC2avqS3m8sjTb05TYWp8S7V7DSVCK3ODxS7Xk5VPA50yDLT0kMMIKzFa_bqwEuBu2EKyRGyyzXmreU3gTjNnutwoTcBWi7o4hfNdK3bTXvtcufc3kWmeAqqTwTF8r0ggJdHGQ"/>
+</div>
+<div class="mt-8">
+<h4 class="text-xl font-bold uppercase tracking-tight">Villa Lakeside</h4>
+<p class="text-xs text-slate-400 uppercase tracking-widest mt-2">Cologny</p>
+</div>
+</div>
+</div>
+<!-- Item 3: Center centered -->
+<div class="md:col-span-12 lg:col-span-6 lg:col-start-4 my-32">
+<div class="group cursor-pointer">
+<div class="overflow-hidden aspect-video">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4GhU_Ih2Z4a7ohKMevSTEYuiV5TyUHbpuSCTndLtiV3ugaEXtJIfcasjvWzS1NhUNtkGcbvvImngnDduN9cqqj5E5SVndaCsGps6uYKgYGa-ZO7PPgjZh9-wmjPcQsgHa9KS-97fUUcCOHKdLjHtcmaRWKH1wz1DLFa3H6lI2eNhp55eqRefVvb39HeRNEwERqMwwiwUHnioz25W1VnHoRNztrM6ZTJ0h_H1mm6EjdScyEDbNrA9qzsLkjyiZQdtMrYeaKwWAaA"/>
+</div>
+<div class="mt-8 flex gap-8">
+<span class="text-[10px] font-bold tracking-widest py-1 px-2 border border-black/10">03</span>
+<div>
+<h4 class="text-xl font-bold uppercase tracking-tight">Penthouse 26</h4>
+<p class="text-xs text-slate-400 uppercase tracking-widest mt-2">Zurich</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Before/After Slider interactif -->
+<section class="py-0 overflow-hidden bg-black" id="avant-apres">
+<div id="ba-slider" class="relative w-full select-none" style="height:90vh;cursor:col-resize;touch-action:none;">
+
+  <!-- Image APRÈS (fond complet) -->
+  <div class="absolute inset-0">
+    <img id="ba-after" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5vWrx1hhf9jpUxrGQH8VA3cUUtSq7x7bHsFVAwN9oOT9EPRVLlFobmxiIq9IGLYCVxTumSNMyjBsvxOsgx0lH5WUCt_zeO44lmZiE_eO3GcTWX6P4zGP9EpEVpcEQBFfN2bBmeFpVFOZxhw0PauQP0PI2zQ-DY0O-3ZHlyGkNGObYbEHWNCWxTCbAtAQBjj8jRk-zT0NcYdX7GDHcpVS9Q4wQ2UeLsFPJIy_jwHl2lOFfyR6QozB53hUvBLRIsDvimd1WtJDmsQ"/>
+    <div class="absolute bottom-8 right-8 text-white text-[10px] font-bold uppercase tracking-[0.4em] z-10">Après</div>
+  </div>
+
+  <!-- Image AVANT (clip dynamique) -->
+  <div id="ba-before-clip" class="absolute inset-0 overflow-hidden" style="width:50%;">
+    <img class="absolute inset-0 w-full h-full object-cover" style="min-width:100vw;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOX-eBUFBmOc-QOBgv3wkVj7pEDLBstKtyiGg1CU4ylUVdTzALUXgW_XL9ycdLx03EETp8iXwcxzIvr9QsvEQY-G0y6G4kyJGxO0LnJjHOYfQ7rQjcEIdSITT7HOBmOc3kREYziqQ7CUVH4OmWvzlKw0mOA_vtUaxf4yFFwoU6Yd9TlVe_cPVaEeYmyGCj01MntlrSCDbIj9ROvFkmWNiEDoFVWqMSuiS1fztkFOKxzYD3qxsvMYN1EdjcH5d-nIZVgFhxFsyHdQ"/>
+    <div class="absolute bottom-8 left-8 text-white text-[10px] font-bold uppercase tracking-[0.4em] z-10">Avant</div>
+  </div>
+
+  <!-- Handle (ligne + cercle) -->
+  <div id="ba-handle" class="absolute top-0 bottom-0 z-30 flex flex-col items-center" style="left:50%;transform:translateX(-50%);pointer-events:none;">
+    <div class="w-px h-full bg-white/80"></div>
+    <div class="absolute top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-xl" style="pointer-events:none;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 10H14M6 10L3 7M6 10L3 13M14 10L17 7M14 10L17 13" stroke="#4A3728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <!-- Titre flottant -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+    <h3 class="text-white text-[10vw] font-black uppercase tracking-tighter mix-blend-difference opacity-20">Metamorphosis</h3>
+  </div>
+
+  <!-- Label bas gauche -->
+  <div class="absolute bottom-12 left-12 z-30 pointer-events-none">
+    <span class="text-white text-[10px] font-bold uppercase tracking-[0.4em] block mb-3">Renovation Mastery</span>
+    <h4 class="text-white text-3xl font-light uppercase tracking-tighter">Avant <span class="text-white/30 px-3">/</span> Après</h4>
+  </div>
+
+</div>
+</section>
+
+<script>
+// ─── AVANT / APRÈS SLIDER ────────────────────────────────────────
+(function() {
+  const slider = document.getElementById("ba-slider");
+  const clip   = document.getElementById("ba-before-clip");
+  const handle = document.getElementById("ba-handle");
+  let dragging = false;
+
+  function setPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = Math.max(2, Math.min(98, ((x - rect.left) / rect.width) * 100));
+    clip.style.width   = pct + "%";
+    handle.style.left  = pct + "%";
+  }
+
+  slider.addEventListener("mousedown",  e => { dragging = true; setPos(e.clientX); });
+  window.addEventListener("mouseup",    ()  => { dragging = false; });
+  window.addEventListener("mousemove",  e  => { if (dragging) setPos(e.clientX); });
+
+  slider.addEventListener("touchstart", e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener("touchend",   ()  => { dragging = false; });
+  window.addEventListener("touchmove",  e  => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+
+  // Animation d'intro : balayage de droite à gauche
+  setTimeout(() => {
+    let pct = 90;
+    const anim = setInterval(() => {
+      pct -= 0.8;
+      clip.style.width  = pct + "%";
+      handle.style.left = pct + "%";
+      if (pct <= 50) clearInterval(anim);
+    }, 16);
+  }, 600);
+})();
+</script>
+<!-- Process Section -->
+<section class="py-48 px-10 md:px-24 bg-white" id="process">
+<div class="max-w-7xl mx-auto">
+<div class="mb-32 flex items-baseline gap-12">
+<h3 class="text-7xl font-bold uppercase tracking-tighter">Process</h3>
+<div class="h-[2px] flex-grow bg-primary/10"></div>
+</div>
+<div class="space-y-48">
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="text-[15rem] font-black text-primary/5 leading-none select-none">01</div>
+<div class="max-w-xl">
+<h4 class="text-4xl font-bold uppercase tracking-tight mb-8">Découverte &amp; Immersion</h4>
+<p class="text-xl text-slate-500 font-light leading-relaxed">
+                        Nous commençons par une exploration profonde de votre vision. Ce n'est pas seulement un plan, c'est l'essence de votre futur mode de vie que nous analysons.
+                    </p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row-reverse items-center gap-20">
+<div class="text-[15rem] font-black text-primary/5 leading-none select-none">02</div>
+<div class="max-w-xl">
+<h4 class="text-4xl font-bold uppercase tracking-tight mb-8">Le Concept Visuel</h4>
+<p class="text-xl text-slate-500 font-light leading-relaxed text-right md:text-left">
+                        La création d'un univers où chaque texture et chaque faisceau lumineux est orchestré pour résonner avec vos émotions. Des rendus 3D qui effacent la frontière entre rêve et réalité.
+                    </p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-20">
+<div class="text-[15rem] font-black text-primary/5 leading-none select-none">03</div>
+<div class="max-w-xl">
+<h4 class="text-4xl font-bold uppercase tracking-tight mb-8">Réalisation Signature</h4>
+<p class="text-xl text-slate-500 font-light leading-relaxed">
+                        Un suivi de haute couture. De la première brique au dernier objet d'art, nous coordonnons l'excellence pour une livraison clé en main sans compromis.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section – Accordion Slider -->
+<section id="services" style="padding:80px 0 60px;background:#F7F5F2;overflow:hidden;">
+
+  <style>
+    /* ── Services Slider ── */
+    .srv-head {
+      padding:0 clamp(20px,4vw,60px) 48px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:2rem;
+    }
+    .srv-head h3 {
+      font-size:clamp(2.4rem,5vw,4.5rem);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:-0.03em;
+      color:#4A3728;
+      line-height:1;
+    }
+    .srv-nav-btn {
+      width:2.6rem;height:2.6rem;
+      border:1px solid rgba(74,55,40,0.3);
+      border-radius:50%;
+      background:transparent;
+      color:#4A3728;
+      font-size:1.5rem;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;
+      transition:background .25s,color .25s,border-color .25s;
+      flex-shrink:0;
+    }
+    .srv-nav-btn:hover { background:#4A3728;color:#F7F5F2;border-color:#4A3728; }
+    .srv-nav-btn:disabled { opacity:.3;cursor:default; }
+    .srv-controls { display:flex;gap:.5rem; }
+
+    /* Full-width track – no max-width, no padding */
+    .srv-slider-wrap {
+      width:100%;
+      overflow:hidden;
+    }
+    .srv-track {
+      display:flex;
+      gap:2px;
+      align-items:stretch;
+      width:100%;
+    }
+
+    /* ── Card base ── */
+    .srv-card {
+      position:relative;
+      flex:0 0 4.5rem;
+      min-height:26rem;
+      background:#fff;
+      cursor:pointer;
+      overflow:hidden;
+      transition:flex .6s cubic-bezier(.25,.46,.45,.94),
+                  box-shadow .35s;
+    }
+    /* Active: take all remaining space */
+    .srv-card[active] {
+      flex:1 1 0;
+      box-shadow:0 20px 60px rgba(74,55,40,0.13);
+    }
+
+    /* In-person card: warm tint */
+    .srv-card--onsite { background:#EDE8E2; }
+    .srv-card--onsite[active] { background:#E8E0D5; }
+
+    /* Online cards */
+    .srv-card--online { background:#fff; }
+    .srv-card--online[active] { background:#fff; }
+
+    /* ── Badge ── */
+    .srv-card__badge {
+      position:absolute;
+      top:1.2rem;
+      right:1.2rem;
+      font-size:.6rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      padding:.3rem .65rem;
+      opacity:0;
+      transition:opacity .25s .2s;
+      pointer-events:none;
+    }
+    .srv-card--onsite .srv-card__badge {
+      background:rgba(74,55,40,0.12);
+      color:#4A3728;
+    }
+    .srv-card--online .srv-card__badge {
+      background:rgba(74,55,40,0.07);
+      color:#705743;
+    }
+    .srv-card[active] .srv-card__badge { opacity:1; }
+
+    /* ── Closed state ── */
+    .srv-card__closed {
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:1.2rem;
+      padding:1.5rem .4rem;
+      opacity:1;
+      transition:opacity .2s;
+    }
+    .srv-card[active] .srv-card__closed { opacity:0;pointer-events:none; }
+
+    .srv-card__closed-icon {
+      font-size:1.4rem;
+      color:rgba(74,55,40,0.35);
+    }
+    .srv-card__closed-title {
+      writing-mode:vertical-rl;
+      transform:rotate(180deg);
+      font-size:.7rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      color:rgba(74,55,40,0.4);
+      white-space:nowrap;
+    }
+
+    /* ── Open state ── */
+    .srv-card__open {
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:clamp(1.5rem,3vw,3.5rem) clamp(1.5rem,3.5vw,4rem);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .3s .18s;
+      min-width:0;
+    }
+    .srv-card[active] .srv-card__open { opacity:1;pointer-events:auto; }
+
+    .srv-card__open-icon {
+      font-size:1.8rem;
+      color:#4A3728;
+      margin-bottom:1.2rem;
+    }
+    .srv-card__open-title {
+      font-size:clamp(1.4rem,2.2vw,2.2rem);
+      font-weight:700;
+      color:#4A3728;
+      letter-spacing:-.02em;
+      margin-bottom:.6rem;
+      line-height:1.15;
+    }
+    .srv-card__open-sub {
+      font-size:.78rem;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:#9C806A;
+      margin-bottom:1.6rem;
+    }
+    .srv-card__list {
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:.85rem;
+      margin-bottom:2rem;
+    }
+    .srv-card__list li {
+      display:flex;
+      align-items:flex-start;
+      gap:.75rem;
+      color:#705743;
+      font-size:clamp(.85rem,1.1vw,1rem);
+      font-weight:400;
+      line-height:1.45;
+    }
+    .srv-card__list li::before {
+      content:'';
+      width:5px;height:5px;
+      background:#4A3728;
+      flex-shrink:0;
+      margin-top:.45em;
+    }
+
+    /* CTA button */
+    .srv-card__cta {
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.65rem 1.4rem;
+      border:1px solid rgba(74,55,40,0.5);
+      background:transparent;
+      color:#4A3728;
+      font-size:.75rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.15em;
+      cursor:pointer;
+      text-decoration:none;
+      transition:background .25s,color .25s;
+      align-self:flex-start;
+    }
+    .srv-card__cta:hover { background:#4A3728;color:#F7F5F2; }
+    .srv-card--onsite .srv-card__cta { border-color:rgba(74,55,40,0.4); }
+
+    /* ── Dots ── */
+    .srv-dots {
+      display:flex;gap:.5rem;justify-content:center;
+      padding:28px 0 0;
+    }
+    .srv-dot {
+      width:9px;height:9px;
+      border-radius:50%;
+      background:rgba(74,55,40,0.18);
+      cursor:pointer;
+      transition:.3s;
+      border:none;
+    }
+    .srv-dot.active { background:#4A3728;transform:scale(1.3); }
+
+    /* ── Tablet (768–1023px) : cartes un peu plus étroites ── */
+    @media (min-width:768px) and (max-width:1023px) {
+      .srv-card { flex:0 0 3.5rem; min-height:22rem; }
+      .srv-card__open { padding:1.8rem 2rem; }
+      .srv-card__open-title { font-size:1.3rem; }
+      .srv-card__list li { font-size:.85rem; }
+    }
+
+    /* ── Mobile (≤767px) ── */
+    @media (max-width:767px) {
+      .srv-head { padding:0 20px 28px; flex-direction:column; align-items:flex-start; gap:1rem; }
+      .srv-track { flex-direction:column; gap:3px; }
+
+      /* Chaque carte se comporte comme un bloc statique */
+      .srv-card {
+        flex:none !important;
+        width:100%;
+        overflow:hidden;          /* garde le clip pour l'animation */
+        max-height:58px;
+        transition:max-height .45s cubic-bezier(.25,.46,.45,.94), box-shadow .3s;
+      }
+      .srv-card[active] {
+        max-height:600px;         /* valeur haute assez grande pour tout le contenu */
+        box-shadow:0 8px 28px rgba(74,55,40,0.12);
+      }
+
+      /* Sur mobile : états closed et open en flux normal (pas absolus) */
+      .srv-card__closed {
+        position:relative;
+        inset:unset;
+        flex-direction:row;
+        justify-content:flex-start;
+        padding:.9rem 1.4rem;
+        gap:.7rem;
+        opacity:1 !important;
+        pointer-events:auto !important;
+      }
+      .srv-card[active] .srv-card__closed { display:none; }
+
+      .srv-card__closed-title {
+        writing-mode:horizontal-tb;
+        transform:none;
+        font-size:.68rem;
+      }
+
+      .srv-card__open {
+        position:relative;
+        inset:unset;
+        opacity:1 !important;
+        pointer-events:auto !important;
+        padding:1.6rem 1.4rem;
+        display:none;
+        transition:none;
+        min-width:0;
+      }
+      .srv-card[active] .srv-card__open { display:flex; }
+
+      .srv-card__open-title { font-size:1.25rem; }
+      .srv-card__list { margin-bottom:1.4rem; }
+      .srv-card__list li { font-size:.88rem; }
+
+      /* Badge : toujours visible sur mobile (coin haut-droit de chaque carte) */
+      .srv-card__badge {
+        opacity:1;
+        font-size:.55rem;
+        padding:.25rem .5rem;
+        top:.8rem;
+        right:.8rem;
+      }
+      .srv-dot { display:none; }
+    }
+  </style>
+
+  <!-- Header -->
+  <div class="srv-head">
+    <h3>Services</h3>
+    <div class="srv-controls">
+      <button id="srv-prev" class="srv-nav-btn" aria-label="Précédent">‹</button>
+      <button id="srv-next" class="srv-nav-btn" aria-label="Suivant">›</button>
+    </div>
+  </div>
+
+  <!-- Full-width Slider -->
+  <div class="srv-slider-wrap">
+    <div class="srv-track" id="srv-track">
+
+      <!-- Card 1 : Sur place -->
+      <article class="srv-card srv-card--onsite" active>
+        <span class="srv-card__badge">Sur place</span>
+        <div class="srv-card__closed">
+          <span class="material-symbols-outlined srv-card__closed-icon">location_on</span>
+          <span class="srv-card__closed-title">Présentiel</span>
+        </div>
+        <div class="srv-card__open">
+          <span class="material-symbols-outlined srv-card__open-icon">location_on</span>
+          <h4 class="srv-card__open-title">Offre Présentiel</h4>
+          <p class="srv-card__open-sub">Genève &amp; région</p>
+          <ul class="srv-card__list">
+            <li>Étude de faisabilité &amp; concept — visite, relevés, moodboard, plans 2D/3D</li>
+            <li>Projet complet — plans, choix des matériaux, mobilier, éclairage, dossier artisans</li>
+            <li>Suivi de chantier — maîtrise d'œuvre partielle ou complète</li>
+          </ul>
+          <a class="srv-card__cta" href="#contact">Démarrer un projet →</a>
+        </div>
+      </article>
+
+      <!-- Card 2 : Coaching déco express -->
+      <article class="srv-card srv-card--online">
+        <span class="srv-card__badge">En ligne</span>
+        <div class="srv-card__closed">
+          <span class="material-symbols-outlined srv-card__closed-icon">videocam</span>
+          <span class="srv-card__closed-title">Coaching Express</span>
+        </div>
+        <div class="srv-card__open">
+          <span class="material-symbols-outlined srv-card__open-icon">videocam</span>
+          <h4 class="srv-card__open-title">Coaching Déco Express</h4>
+          <p class="srv-card__open-sub">1h ou 2h en visio</p>
+          <ul class="srv-card__list">
+            <li>Session visio 1h ou 2h</li>
+            <li>Diagnostic personnalisé de votre espace</li>
+            <li>Compte rendu PDF détaillé</li>
+            <li>Sélection de références produits</li>
+          </ul>
+          <a class="srv-card__cta" href="#contact">Prendre rendez-vous →</a>
+        </div>
+      </article>
+
+      <!-- Card 3 : E-design pièce unique -->
+      <article class="srv-card srv-card--online">
+        <span class="srv-card__badge">En ligne</span>
+        <div class="srv-card__closed">
+          <span class="material-symbols-outlined srv-card__closed-icon">design_services</span>
+          <span class="srv-card__closed-title">E-Design</span>
+        </div>
+        <div class="srv-card__open">
+          <span class="material-symbols-outlined srv-card__open-icon">design_services</span>
+          <h4 class="srv-card__open-title">E-Design Pièce Unique</h4>
+          <p class="srv-card__open-sub">Salon · Chambre · Bureau</p>
+          <ul class="srv-card__list">
+            <li>Questionnaire &amp; photos / vidéos de votre espace</li>
+            <li>Plan 2D &amp; moodboard personnalisé</li>
+            <li>Plan d'aménagement détaillé</li>
+            <li>Shopping list complète</li>
+          </ul>
+          <a class="srv-card__cta" href="#contact">Démarrer un projet →</a>
+        </div>
+      </article>
+
+      <!-- Card 4 : E-rénovation -->
+      <article class="srv-card srv-card--online">
+        <span class="srv-card__badge">En ligne</span>
+        <div class="srv-card__closed">
+          <span class="material-symbols-outlined srv-card__closed-icon">architecture</span>
+          <span class="srv-card__closed-title">E-Rénovation</span>
+        </div>
+        <div class="srv-card__open">
+          <span class="material-symbols-outlined srv-card__open-icon">architecture</span>
+          <h4 class="srv-card__open-title">E-Rénovation</h4>
+          <p class="srv-card__open-sub">Projets d'envergure</p>
+          <ul class="srv-card__list">
+            <li>Accompagnement par étapes</li>
+            <li>Revue des plans architectes</li>
+            <li>Choix des matériaux &amp; finitions</li>
+            <li>Consulting à distance sur les décisions clé</li>
+          </ul>
+          <a class="srv-card__cta" href="#contact">Démarrer un projet →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Dots -->
+  <div class="srv-dots" id="srv-dots"></div>
+
+  <script>
+  (() => {
+    const track   = document.getElementById("srv-track");
+    const cards   = Array.from(track.children);
+    const prev    = document.getElementById("srv-prev");
+    const next    = document.getElementById("srv-next");
+    const dotsBox = document.getElementById("srv-dots");
+    const isMobile = () => matchMedia("(max-width:767px)").matches;
+
+    // Build dots
+    cards.forEach((_, i) => {
+      const dot = document.createElement("button");
+      dot.className = "srv-dot";
+      dot.setAttribute("aria-label", "Service " + (i + 1));
+      dot.onclick = () => activate(i);
+      dotsBox.appendChild(dot);
+    });
+    const dots = Array.from(dotsBox.children);
+
+    let current = 0;
+
+    function toggleUI(i) {
+      cards.forEach((c, k) => c.toggleAttribute("active", k === i));
+      dots.forEach((d, k) => d.classList.toggle("active", k === i));
+      prev.disabled = i === 0;
+      next.disabled = i === cards.length - 1;
+    }
+
+    function activate(i) {
+      if (i === current && !isMobile()) return;
+      current = i;
+      toggleUI(i);
+    }
+
+    function go(step) {
+      activate(Math.min(Math.max(current + step, 0), cards.length - 1));
+    }
+
+    prev.onclick = () => go(-1);
+    next.onclick = () => go(1);
+
+    cards.forEach((card, i) => {
+      // Hover activates on desktop only
+      card.addEventListener("mouseenter", () => {
+        if (matchMedia("(hover:hover)").matches && !isMobile()) activate(i);
+      });
+      // Click toggles on mobile (tap to open/close), activates on desktop
+      card.addEventListener("click", e => {
+        if (e.target.closest(".srv-card__cta")) return; // don't hijack CTA clicks
+        if (isMobile() && current === i) return; // already open, let it stay
+        activate(i);
+      });
+    });
+
+    // Swipe support (mobile vertical)
+    let sx = 0, sy = 0;
+    track.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    track.addEventListener("touchend", e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      const dy = e.changedTouches[0].clientY - sy;
+      const threshold = 55;
+      if (isMobile() && Math.abs(dy) > threshold) go(dy > 0 ? -1 : 1);
+      if (!isMobile() && Math.abs(dx) > threshold) go(dx > 0 ? -1 : 1);
+    }, { passive: true });
+
+    // Keyboard
+    addEventListener("keydown", e => {
+      if (document.activeElement && document.activeElement.closest("#services")) {
+        if (["ArrowRight","ArrowDown"].includes(e.key)) { e.preventDefault(); go(1); }
+        if (["ArrowLeft","ArrowUp"].includes(e.key))  { e.preventDefault(); go(-1); }
+      }
+    });
+
+    toggleUI(0);
+  })();
+  </script>
+
+</section>
+<!-- Testimonials -->
+<section class="py-32 px-10 md:px-24 bg-[#FBF9F7] border-t border-primary/5">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 italic text-center md:text-left">
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary/40 text-4xl">format_quote</span>
+<p class="text-xl font-light leading-relaxed">"Une transformation radicale qui a su préserver l'âme du lieu tout en y apportant une modernité incroyable."</p>
+<span class="not-italic text-xs font-bold uppercase tracking-widest text-primary">— Sophie R., Genève</span>
+</div>
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary/40 text-4xl">format_quote</span>
+<p class="text-xl font-light leading-relaxed">"L'expertise de Virginie sur la lumière et les matériaux nobles a fait toute la différence pour notre penthouse."</p>
+<span class="not-italic text-xs font-bold uppercase tracking-widest text-primary">— Marc L., Paris</span>
+</div>
+<div class="flex flex-col gap-6">
+<span class="material-symbols-outlined text-primary/40 text-4xl">format_quote</span>
+<p class="text-xl font-light leading-relaxed">"Même à distance, le suivi a été impeccable. Le résultat final dépasse toutes nos espérances."</p>
+<span class="not-italic text-xs font-bold uppercase tracking-widest text-primary">— Elena D., London</span>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-48 px-10 md:px-24 bg-white overflow-hidden" id="about">
+<div class="max-w-screen-xl mx-auto">
+<div class="flex flex-col lg:flex-row items-center gap-32">
+<div id="about-photo-wrap" class="relative w-full lg:w-1/2" style="perspective:800px;transform-style:preserve-3d;">
+<div class="absolute -top-10 -left-10 text-[20rem] font-black text-black/5 leading-none select-none z-0">VB</div>
+<img id="about-photo" alt="Portrait of Virginie Barrier" class="relative z-10 w-full aspect-[4/5] object-cover grayscale" style="will-change:transform;transition:filter .4s;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHuOEhZBRBIi2I3b5jEljAal4wJjDRhVTJ8Ap_cUGNTSdr0LPxepe9JkMm3dLutmCPpSWwNi9IwYAP-S02I1PiMFjTDIH9fnRcis1tRdO8OQiWHZCcqXHLwZm87X_0E7HG-eW7EAJUnw-fn4QVRoOf1uCKzr1UPfrSc1y6nP12vTK3e2hX3Pd4s_CjvrB2eHnb19ZKfz4qPQ6b8GAYZqzOPqnsIAdkOdSB5_t8oin1wwG5HNce7QLoxoC-C2ITgWbLJhXgz5twag"/>
+</div>
+<div class="w-full lg:w-1/2">
+<span class="text-primary font-bold tracking-[0.6em] text-[10px] uppercase mb-8 block">La Vision</span>
+<h3 class="text-6xl font-bold mb-12 uppercase tracking-tighter leading-none">Virginie Barrier</h3>
+<div class="space-y-8 text-slate-500 font-light text-xl leading-relaxed">
+<p>Fondatrice d'Edition 26, Virginie Barrier combine une formation architecturale rigoureuse avec une sensibilité artistique aiguisée par le design de luxe.</p>
+<p class="italic font-medium text-slate-800">"Un intérieur n'est pas une décoration, c'est un paysage intérieur."</p>
+<p>Sa signature réside dans l'équilibre parfait entre esthétique minimaliste et confort absolu.</p>
+</div>
+<div class="mt-16 flex gap-12 border-t border-black/5 pt-12">
+<div>
+<div class="text-4xl font-bold text-primary stat-counter" data-target="10" data-suffix="+">0+</div>
+<div class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mt-2">Années d'expérience</div>
+</div>
+<div>
+<div class="text-4xl font-bold text-primary stat-counter" data-target="150" data-suffix="+">0+</div>
+<div class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mt-2">Projets réalisés</div>
+</div>
+<div>
+<div class="text-4xl font-bold text-primary stat-counter" data-target="98" data-suffix="%">0%</div>
+<div class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 mt-2">Clients satisfaits</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Form Section -->
+<section id="contact" style="position:relative;overflow:hidden;background:#4A3728;">
+  <!-- Image de fond avec overlay -->
+  <div style="position:absolute;inset:0;z-index:0;">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHuOEhZBRBIi2I3b5jEljAal4wJjDRhVTJ8Ap_cUGNTSdr0LPxepe9JkMm3dLutmCPpSWwNi9IwYAP-S02I1PiMFjTDIH9fnRcis1tRdO8OQiWHZCcqXHLwZm87X_0E7HG-eW7EAJUnw-fn4QVRoOf1uCKzr1UPfrSc1y6nP12vTK3e2hX3Pd4s_CjvrB2eHnb19ZKfz4qPQ6b8GAYZqzOPqnsIAdkOdSB5_t8oin1wwG5HNce7QLoxoC-C2ITgWbLJhXgz5twag" style="width:100%;height:100%;object-fit:cover;filter:grayscale(30%);" alt=""/>
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,55,40,0.97) 0%,rgba(74,55,40,0.85) 50%,rgba(74,55,40,0.75) 100%);"></div>
+  </div>
+
+  <div class="relative contact-inner" style="z-index:1;max-width:1280px;margin:0 auto;">
+  <div class="contact-grid">
+
+    <!-- Colonne gauche -->
+    <div>
+      <span style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;letter-spacing:0.5em;text-transform:uppercase;margin-bottom:32px;">Contact</span>
+      <h3 style="color:white;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;text-transform:uppercase;letter-spacing:-0.03em;line-height:0.92;margin-bottom:32px;">Commençons<br/>à créer.</h3>
+      <p style="color:rgba(255,255,255,0.6);font-size:1.1rem;font-weight:300;max-width:320px;line-height:1.7;margin-bottom:48px;">Prêt à transformer votre espace en une œuvre d'art vivante ? Parlons de votre projet.</p>
+
+      <!-- Infos contact -->
+      <div style="display:flex;flex-direction:column;gap:20px;border-top:1px solid rgba(255,255,255,0.15);padding-top:40px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="material-symbols-outlined" style="color:rgba(255,255,255,0.5);font-size:18px;">mail</span>
+          <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;letter-spacing:0.05em;">studio@edition26.ch</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="material-symbols-outlined" style="color:rgba(255,255,255,0.5);font-size:18px;">location_on</span>
+          <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;letter-spacing:0.05em;">Genève, Suisse</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span class="material-symbols-outlined" style="color:rgba(255,255,255,0.5);font-size:18px;">schedule</span>
+          <span style="color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;letter-spacing:0.05em;">Lun – Ven · 9h – 18h</span>
+        </div>
+      </div>
+
+      <!-- Réseaux -->
+      <div style="display:flex;gap:24px;margin-top:40px;">
+        <a href="#" style="color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Instagram</a>
+        <a href="#" style="color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Pinterest</a>
+        <a href="#" style="color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;text-decoration:none;transition:color .2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">LinkedIn</a>
+      </div>
+    </div>
+
+    <!-- Colonne droite : formulaire -->
+    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:48px;">
+      <form id="contact-form" style="display:flex;flex-direction:column;gap:32px;">
+        <div class="contact-field">
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;">Votre Nom</label>
+          <input type="text" placeholder="Virginie Dupont" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:white;font-size:1.1rem;font-weight:300;padding:0 0 12px;outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='white'" onblur="this.style.borderColor='rgba(255,255,255,0.25)'"/>
+        </div>
+        <div class="contact-field">
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;">Email</label>
+          <input type="email" placeholder="vous@exemple.com" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:white;font-size:1.1rem;font-weight:300;padding:0 0 12px;outline:none;transition:border-color .3s;" onfocus="this.style.borderColor='white'" onblur="this.style.borderColor='rgba(255,255,255,0.25)'"/>
+        </div>
+        <div class="contact-field">
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;">Votre Projet</label>
+          <textarea placeholder="Décrivez votre espace et vos envies..." rows="3" style="width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:white;font-size:1.1rem;font-weight:300;padding:0 0 12px;outline:none;resize:none;transition:border-color .3s;" onfocus="this.style.borderColor='white'" onblur="this.style.borderColor='rgba(255,255,255,0.25)'"></textarea>
+        </div>
+        <div class="contact-field">
+          <label style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;">Budget estimé</label>
+          <select style="width:100%;background:rgba(74,55,40,0.8);border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.7);font-size:1rem;font-weight:300;padding:0 0 12px;outline:none;cursor:pointer;appearance:none;">
+            <option value="">Sélectionner...</option>
+            <option>– 20 000 CHF</option>
+            <option>20 000 – 50 000 CHF</option>
+            <option>50 000 – 100 000 CHF</option>
+            <option>100 000 CHF +</option>
+          </select>
+        </div>
+        <button type="submit" style="margin-top:8px;width:100%;padding:20px;background:transparent;border:1px solid rgba(255,255,255,0.6);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4em;cursor:pointer;transition:all .3s;" onmouseover="this.style.background='white';this.style.color='#4A3728'" onmouseout="this.style.background='transparent';this.style.color='white'">
+          Envoyer le Message
+        </button>
+      </form>
+    </div>
+
+  </div>
+  </div>
+</section>
+<!-- Footer -->
+<footer class="py-20 px-10 md:px-24 bg-white border-t border-black/5">
+<div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start gap-20">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<img alt="Edition 26 icone" class="h-12 w-auto" src="icone.png"/>
+<img alt="Edition 26 logo" class="h-8 w-auto" src="logo.png"/>
+</div>
+<p class="text-xs text-slate-400 max-w-[200px] leading-relaxed uppercase tracking-widest">
+                    Architecture d'intérieur de prestige — Genève
+                </p>
+</div>
+<div class="flex flex-col md:flex-row gap-20">
+<div class="flex flex-col gap-4">
+<span class="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-300">Social</span>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="#">Instagram</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="#">Pinterest</a>
+<a class="text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors" href="#">LinkedIn</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-300">Legal</span>
+<p class="text-xs font-bold uppercase tracking-widest">© 2024 Edition 26</p>
+</div>
+</div>
+</div>
+</footer>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#hero-pin",
+      start: "top top",
+      end: "+=200%",
+      pin: true,
+      scrub: 1.5,
+      anticipatePin: 1
+    }
+  });
+
+  // Phase 1 : zoom + disparition progressive du logo
+  tl.to("#intro-logo", {
+    scale: 40,
+    opacity: 0,
+    ease: "power2.in",
+    duration: 1
+  }, 0);
+
+  // Phase 2 : le hero apparaît en dessous pendant que le logo s'efface
+  tl.to("#hero", {
+    opacity: 1,
+    ease: "power1.in",
+    duration: 0.5
+  }, 0.4);
+
+  // Phase 3 : fond intro disparaît complètement
+  tl.to("#intro-screen", {
+    opacity: 0,
+    ease: "none",
+    duration: 0.1
+  }, 0.85);
+
+  // Header apparaît à partir de la section Manifesto
+  ScrollTrigger.create({
+    trigger: "#manifesto",
+    start: "top 50%",
+    onEnter: () => gsap.to("#main-header", {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: "power2.out",
+      pointerEvents: "auto",
+      clearProps: "pointerEvents"
+    }),
+    onLeaveBack: () => gsap.to("#main-header", {
+      opacity: 0,
+      y: "-100%",
+      duration: 0.3,
+      ease: "power2.in",
+      onComplete: () => { document.getElementById("main-header").style.pointerEvents = "none"; }
+    })
+  });
+
+  // ─── SCROLL ANIMATIONS ───────────────────────────────────────────
+
+  // Manifesto : titre split + ligne
+  gsap.from("#manifesto h2", {
+    scrollTrigger: { trigger: "#manifesto", start: "top 75%" },
+    y: 80, opacity: 0, duration: 1.2, ease: "power3.out"
+  });
+  gsap.from("#manifesto p", {
+    scrollTrigger: { trigger: "#manifesto", start: "top 65%" },
+    y: 40, opacity: 0, duration: 1, ease: "power2.out", delay: 0.2
+  });
+  gsap.from("#manifesto .h-px", {
+    scrollTrigger: { trigger: "#manifesto", start: "top 75%" },
+    scaleX: 0, transformOrigin: "left", duration: 1, ease: "power2.out"
+  });
+
+  // Portfolio : items qui apparaissent en décalé
+  gsap.utils.toArray("#portfolio .group").forEach((el, i) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 85%" },
+      y: 60, opacity: 0, duration: 1, ease: "power3.out", delay: i * 0.15
+    });
+  });
+
+  // Process : les numéros et textes
+  gsap.utils.toArray("#process .space-y-48 > div").forEach((el, i) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 80%" },
+      x: i % 2 === 0 ? -60 : 60, opacity: 0,
+      duration: 1.1, ease: "power3.out"
+    });
+  });
+
+  // Services
+  gsap.utils.toArray("#services .grid > div").forEach((el, i) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 85%" },
+      y: 40, opacity: 0, duration: 0.9, ease: "power2.out", delay: i * 0.2
+    });
+  });
+
+  // Témoignages
+  gsap.utils.toArray(".italic.text-center > div, .italic.text-left > div").forEach((el, i) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 85%" },
+      y: 30, opacity: 0, duration: 0.8, ease: "power2.out", delay: i * 0.15
+    });
+  });
+
+  // About : image + texte
+  gsap.from("#about img.relative", {
+    scrollTrigger: { trigger: "#about", start: "top 70%" },
+    x: -80, opacity: 0, duration: 1.3, ease: "power3.out"
+  });
+  gsap.from("#about .w-full.lg\\:w-1\\/2:last-child", {
+    scrollTrigger: { trigger: "#about", start: "top 65%" },
+    x: 80, opacity: 0, duration: 1.3, ease: "power3.out", delay: 0.15
+  });
+
+  // Compteurs gérés séparément (voir bas de script)
+
+  // Contact : titre + champs
+  gsap.from("#contact h3", {
+    scrollTrigger: { trigger: "#contact", start: "top 75%", once: true },
+    y: 60, opacity: 0, duration: 1, ease: "power3.out"
+  });
+  gsap.from(".contact-field", {
+    scrollTrigger: { trigger: "#contact-form", start: "top 85%", once: true },
+    y: 20, opacity: 0, duration: 0.6, ease: "power2.out", stagger: 0.1
+  });
+
+  // ─── PARALLAX IMAGE HERO ─────────────────────────────────────────
+  gsap.to("#hero img", {
+    scrollTrigger: {
+      trigger: "#hero-pin", start: "top top", end: "+=200%", scrub: true
+    },
+    y: "20%", ease: "none"
+  });
+
+  // ─── MOUSE INTERACTIONS ──────────────────────────────────────────
+
+  // Curseur custom
+  const cursor = document.createElement("div");
+  cursor.id = "custom-cursor";
+  cursor.style.cssText = "position:fixed;top:0;left:0;width:10px;height:10px;background:#4A3728;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:multiply;";
+  const cursorRing = document.createElement("div");
+  cursorRing.id = "cursor-ring";
+  cursorRing.style.cssText = "position:fixed;top:0;left:0;width:36px;height:36px;border:1px solid rgba(74,55,40,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s;";
+  document.body.appendChild(cursor);
+  document.body.appendChild(cursorRing);
+
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener("mousemove", e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1 });
+  });
+  // Ring suit avec lag
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    gsap.set(cursorRing, { x: ringX, y: ringY });
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Cursor s'agrandit sur liens/boutons
+  document.querySelectorAll("a, button, .group").forEach(el => {
+    el.addEventListener("mouseenter", () => {
+      gsap.to(cursor, { width: 6, height: 6, duration: 0.2 });
+      gsap.to(cursorRing, { width: 56, height: 56, borderColor: "rgba(74,55,40,0.7)", duration: 0.3 });
+    });
+    el.addEventListener("mouseleave", () => {
+      gsap.to(cursor, { width: 10, height: 10, duration: 0.2 });
+      gsap.to(cursorRing, { width: 36, height: 36, borderColor: "rgba(74,55,40,0.4)", duration: 0.3 });
+    });
+  });
+
+  // Parallax mouse sur le hero
+  document.querySelector("#hero").addEventListener("mousemove", e => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
+    gsap.to("#hero img", { x: dx * -18, y: dy * -12, duration: 1.2, ease: "power2.out" });
+    gsap.to("#hero .relative.z-10", { x: dx * 8, y: dy * 5, duration: 1.4, ease: "power2.out" });
+  });
+  document.querySelector("#hero").addEventListener("mouseleave", () => {
+    gsap.to("#hero img", { x: 0, y: 0, duration: 1.5, ease: "power3.out" });
+    gsap.to("#hero .relative.z-10", { x: 0, y: 0, duration: 1.5, ease: "power3.out" });
+  });
+
+  // Hover portfolio images : zoom doux
+  document.querySelectorAll("#portfolio .overflow-hidden img").forEach(img => {
+    img.parentElement.addEventListener("mouseenter", () => gsap.to(img, { scale: 1.05, duration: 0.8, ease: "power2.out" }));
+    img.parentElement.addEventListener("mouseleave", () => gsap.to(img, { scale: 1, duration: 0.8, ease: "power2.out" }));
+  });
+
+  // Liens nav : underline animé au hover
+  document.querySelectorAll("nav a:not(.border)").forEach(link => {
+    const line = document.createElement("span");
+    line.style.cssText = "position:absolute;bottom:-2px;left:0;width:0;height:1px;background:#4A3728;transition:width .3s ease;";
+    link.style.position = "relative";
+    link.appendChild(line);
+    link.addEventListener("mouseenter", () => line.style.width = "100%");
+    link.addEventListener("mouseleave", () => line.style.width = "0");
+  });
+
+  // ─── MOUSE MAGNETISM PHOTO ───────────────────────────────────────
+  (function() {
+    const wrap  = document.getElementById("about-photo-wrap");
+    const photo = document.getElementById("about-photo");
+    if (!wrap || !photo) return;
+
+    let raf;
+    let targetRX = 0, targetRY = 0, targetTX = 0, targetTY = 0;
+    let curRX = 0, curRY = 0, curTX = 0, curTY = 0;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animate() {
+      curRX = lerp(curRX, targetRX, 0.08);
+      curRY = lerp(curRY, targetRY, 0.08);
+      curTX = lerp(curTX, targetTX, 0.08);
+      curTY = lerp(curTY, targetTY, 0.08);
+      photo.style.transform = `perspective(800px) rotateX(${curRX}deg) rotateY(${curRY}deg) translate(${curTX}px,${curTY}px) scale(1.02)`;
+      raf = requestAnimationFrame(animate);
+    }
+
+    wrap.addEventListener("mouseenter", () => {
+      photo.style.filter = "grayscale(0%)";
+      raf = requestAnimationFrame(animate);
+    });
+
+    wrap.addEventListener("mousemove", e => {
+      const r   = wrap.getBoundingClientRect();
+      const x   = (e.clientX - r.left) / r.width  - 0.5;  // -0.5 à 0.5
+      const y   = (e.clientY - r.top)  / r.height - 0.5;
+      targetRY  =  x * 12;   // inclinaison gauche/droite
+      targetRX  = -y * 8;    // inclinaison haut/bas
+      targetTX  =  x * 10;   // translation légère
+      targetTY  =  y * 6;
+    });
+
+    wrap.addEventListener("mouseleave", () => {
+      photo.style.filter = "grayscale(100%)";
+      targetRX = targetRY = targetTX = targetTY = 0;
+      setTimeout(() => { cancelAnimationFrame(raf); photo.style.transform = ""; }, 600);
+    });
+  })();
+
+  // ─── COMPTEURS "LA VISION" ───────────────────────────────────────
+  (function() {
+    // Retire l'ancien compteur GSAP pour éviter les doublons
+    document.querySelectorAll(".stat-counter").forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || "";
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          const duration = 1800;
+          const start    = performance.now();
+          const easeOut  = t => 1 - Math.pow(1 - t, 3);
+
+          function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const val      = Math.round(easeOut(progress) * target);
+            el.textContent = val + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    });
+  })();
+
+</script>
+</body></html>
