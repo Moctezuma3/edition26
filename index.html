@@ -134,6 +134,25 @@
         @media (hover: none) {
           #custom-cursor, #cursor-ring { display: none !important; }
         }
+
+        /* ── GLOBAL : prevent horizontal overflow ─────────── */
+        html, body { overflow-x: hidden; max-width: 100%; }
+
+        /* ── TABLET 769–1023px ───────────────────────────── */
+        @media (min-width:769px) and (max-width:1023px) {
+          /* Process : réduire les numéros géants sur tablette */
+          #process .text-\[15rem\] { font-size: 8rem !important; }
+          #process h4 { font-size: 2rem !important; }
+          #process .space-y-48 { gap: 80px !important; }
+
+          /* About : réduire lettre VB sur tablette */
+          #about .text-\[20rem\] { font-size: 10rem !important; }
+          #about h3 { font-size: 3rem !important; }
+          #about .flex.flex-col.lg\:flex-row { gap: 48px !important; }
+
+          /* Testimonials : gap plus petit sur tablette */
+          #about + section .grid { gap: 24px; }
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-primary dark:text-slate-100 scroll-smooth">
@@ -271,7 +290,7 @@
 
   <!-- Image AVANT (clip dynamique) -->
   <div id="ba-before-clip" class="absolute inset-0 overflow-hidden" style="width:50%;">
-    <img class="absolute inset-0 w-full h-full object-cover" style="min-width:100vw;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOX-eBUFBmOc-QOBgv3wkVj7pEDLBstKtyiGg1CU4ylUVdTzALUXgW_XL9ycdLx03EETp8iXwcxzIvr9QsvEQY-G0y6G4kyJGxO0LnJjHOYfQ7rQjcEIdSITT7HOBmOc3kREYziqQ7CUVH4OmWvzlKw0mOA_vtUaxf4yFFwoU6Yd9TlVe_cPVaEeYmyGCj01MntlrSCDbIj9ROvFkmWNiEDoFVWqMSuiS1fztkFOKxzYD3qxsvMYN1EdjcH5d-nIZVgFhxFsyHdQ"/>
+    <img class="absolute inset-0 object-cover" style="width:100vw;height:100%;left:0;top:0;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOX-eBUFBmOc-QOBgv3wkVj7pEDLBstKtyiGg1CU4ylUVdTzALUXgW_XL9ycdLx03EETp8iXwcxzIvr9QsvEQY-G0y6G4kyJGxO0LnJjHOYfQ7rQjcEIdSITT7HOBmOc3kREYziqQ7CUVH4OmWvzlKw0mOA_vtUaxf4yFFwoU6Yd9TlVe_cPVaEeYmyGCj01MntlrSCDbIj9ROvFkmWNiEDoFVWqMSuiS1fztkFOKxzYD3qxsvMYN1EdjcH5d-nIZVgFhxFsyHdQ"/>
     <div class="absolute bottom-8 left-8 text-white text-[10px] font-bold uppercase tracking-[0.4em] z-10">Avant</div>
   </div>
 
@@ -873,7 +892,7 @@
 <section class="py-48 px-10 md:px-24 bg-white overflow-hidden" id="about">
 <div class="max-w-screen-xl mx-auto">
 <div class="flex flex-col lg:flex-row items-center gap-32">
-<div id="about-photo-wrap" class="relative w-full lg:w-1/2" style="perspective:800px;transform-style:preserve-3d;">
+<div id="about-photo-wrap" class="relative w-full lg:w-1/2 overflow-hidden" style="perspective:800px;transform-style:preserve-3d;">
 <div class="absolute -top-10 -left-10 text-[20rem] font-black text-black/5 leading-none select-none z-0">VB</div>
 <img id="about-photo" alt="Portrait of Virginie Barrier" class="relative z-10 w-full aspect-[4/5] object-cover grayscale" style="will-change:transform;transition:filter .4s;" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHuOEhZBRBIi2I3b5jEljAal4wJjDRhVTJ8Ap_cUGNTSdr0LPxepe9JkMm3dLutmCPpSWwNi9IwYAP-S02I1PiMFjTDIH9fnRcis1tRdO8OQiWHZCcqXHLwZm87X_0E7HG-eW7EAJUnw-fn4QVRoOf1uCKzr1UPfrSc1y6nP12vTK3e2hX3Pd4s_CjvrB2eHnb19ZKfz4qPQ6b8GAYZqzOPqnsIAdkOdSB5_t8oin1wwG5HNce7QLoxoC-C2ITgWbLJhXgz5twag"/>
 </div>
@@ -945,7 +964,7 @@
     </div>
 
     <!-- Colonne droite : formulaire -->
-    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:48px;">
+    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);padding:clamp(24px,5vw,48px);">
       <form id="contact-form" style="display:flex;flex-direction:column;gap:32px;">
         <div class="contact-field">
           <label style="display:block;color:rgba(255,255,255,0.5);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;margin-bottom:10px;">Votre Nom</label>
