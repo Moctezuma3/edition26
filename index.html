@@ -85,8 +85,11 @@
         @media (max-width: 1024px) {
           #portfolio .grid { gap: 48px; }
           #portfolio .lg\:col-start-9,
-          #portfolio .lg\:col-start-4 { grid-column: span 12 !important; margin-top: 0 !important; }
-          #portfolio img { height: 55vw !important; }
+          #portfolio .lg\:col-start-4 { grid-column: span 12 !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+          /* Seul Item 1 a une hauteur fixe à limiter — les autres utilisent aspect-ratio */
+          #portfolio .grid > div:first-child img { height: 55vw !important; }
+          #portfolio .aspect-\[3\/4\] img,
+          #portfolio .aspect-video img { height: 100% !important; }
         }
 
         /* Process : réduire les numéros géants sur mobile */
@@ -117,6 +120,13 @@
         @media (max-width: 640px) {
           #about .mt-16.flex { flex-wrap: wrap; gap: 24px; }
           .stat-counter { font-size: 2rem !important; }
+          /* Labels stat : réduire letter-spacing pour éviter le débordement */
+          .stat-counter ~ div { letter-spacing: 0.05em !important; font-size: 9px !important; }
+        }
+
+        /* Contact form labels : réduire letter-spacing sur mobile */
+        @media (max-width: 640px) {
+          .contact-field label { letter-spacing: 0.08em !important; }
         }
 
         /* Témoignages */
