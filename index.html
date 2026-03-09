@@ -81,15 +81,26 @@
           #manifesto h2 { font-size: 2.4rem !important; line-height: 1.2 !important; }
         }
 
-        /* Portfolio : pas de col-start complexe sur mobile */
+        /* Portfolio : pas de col-start complexe sur tablette/mobile */
         @media (max-width: 1024px) {
-          #portfolio .grid { gap: 48px; }
+          #portfolio .grid { gap: 48px !important; }
           #portfolio .lg\:col-start-9,
           #portfolio .lg\:col-start-4 { grid-column: span 12 !important; margin-top: 0 !important; margin-bottom: 0 !important; }
           /* Seul Item 1 a une hauteur fixe à limiter — les autres utilisent aspect-ratio */
           #portfolio .grid > div:first-child img { height: 55vw !important; }
           #portfolio .aspect-\[3\/4\] img,
           #portfolio .aspect-video img { height: 100% !important; }
+        }
+
+        /* Portfolio : layout mobile */
+        @media (max-width: 768px) {
+          #portfolio { padding-top: 48px !important; padding-bottom: 48px !important; }
+          #portfolio .mb-32 { margin-bottom: 24px !important; }
+          #portfolio .grid { gap: 32px !important; }
+          #portfolio .flex.justify-between { flex-direction: column; gap: 8px; align-items: flex-start; }
+          #portfolio .text-6xl { font-size: 2.2rem !important; }
+          #portfolio .text-8xl { font-size: 3rem !important; }
+          #portfolio .max-w-xs { max-width: 100% !important; }
         }
 
         /* Process : réduire les numéros géants sur mobile */
