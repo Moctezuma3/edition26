@@ -154,10 +154,18 @@
           footer .gap-20 { gap: 24px; }
         }
 
-        /* Portfolio item 1 : hauteur container fiable (bypass Tailwind JIT) */
-        .portfolio-img-wrap { height: 80vh; }
+        /* Portfolio item 1 : layout 100% CSS pur, zéro dépendance Tailwind */
+        .portfolio-img-wrap { height: 80vh; position: relative; }
         @media (max-width: 767px) {
           .portfolio-img-wrap { height: 70vw; }
+        }
+        .portfolio-img-wrap img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          display: block !important;
+          position: relative !important;
+          opacity: 1 !important;
         }
 
         /* Curseur custom désactivé sur touch */
