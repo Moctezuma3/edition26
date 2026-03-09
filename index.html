@@ -37,8 +37,8 @@
         .image-overlay { background: linear-gradient(to bottom, rgba(17,33,28,0) 0%, rgba(17,33,28,0.4) 100%); }
 
         /* ── FALLBACK classes Tailwind JIT (garantis même si CDN lent) ── */
-        .aspect-\[3\/4\] { aspect-ratio: 3 / 4; }
-        .aspect-video    { aspect-ratio: 16 / 9; }
+        #portfolio .aspect-\[3\/4\] { aspect-ratio: 3 / 4; width: 100%; }
+        #portfolio .aspect-video    { aspect-ratio: 16 / 9; width: 100%; }
         .gap-24          { gap: 6rem; }
 
         /* ── RESPONSIVE ─────────────────────────────────── */
@@ -154,23 +154,26 @@
           footer .gap-20 { gap: 24px; }
         }
 
-        /* Portfolio item 1 : layout 100% CSS pur, zéro dépendance Tailwind */
+        /* Portfolio : toutes les images — CSS pur, sans dépendance Tailwind */
         .portfolio-img-wrap { height: 80vh; position: relative; }
         @media (max-width: 767px) {
           .portfolio-img-wrap { height: 70vw; }
         }
-        .portfolio-img-wrap img {
+        #portfolio .overflow-hidden img {
           width: 100% !important;
           height: 100% !important;
           object-fit: cover !important;
           display: block !important;
-          position: relative !important;
-          opacity: 1 !important;
           filter: grayscale(100%);
           transition: filter 1s ease-in-out;
         }
-        .portfolio-img-wrap:hover img {
+        #portfolio .overflow-hidden:hover img {
           filter: grayscale(0%);
+        }
+        /* Spécifique Item 1 */
+        .portfolio-img-wrap img {
+          position: relative !important;
+          opacity: 1 !important;
         }
 
         /* Curseur custom désactivé sur touch */
@@ -295,7 +298,7 @@
 <div class="md:col-span-12 lg:col-span-4 lg:col-start-9 lg:mt-48">
 <div class="group cursor-pointer">
 <div class="overflow-hidden aspect-[3/4]">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="img-portfolio-2.jpg"/>
+<img src="img-portfolio-2.jpg" alt="Villa Lakeside"/>
 </div>
 <div class="mt-8">
 <h4 class="text-xl font-bold uppercase tracking-tight">Villa Lakeside</h4>
@@ -307,7 +310,7 @@
 <div class="md:col-span-12 lg:col-span-6 lg:col-start-4 my-32">
 <div class="group cursor-pointer">
 <div class="overflow-hidden aspect-video">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="img-portfolio-3.jpg"/>
+<img src="img-portfolio-3.jpg" alt="Penthouse 26"/>
 </div>
 <div class="mt-8 flex gap-8">
 <span class="text-[10px] font-bold tracking-widest py-1 px-2 border border-black/10">03</span>
