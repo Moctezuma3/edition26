@@ -166,6 +166,11 @@
           display: block !important;
           position: relative !important;
           opacity: 1 !important;
+          filter: grayscale(100%);
+          transition: filter 1s ease-in-out;
+        }
+        .portfolio-img-wrap:hover img {
+          filter: grayscale(0%);
         }
 
         /* Curseur custom désactivé sur touch */
@@ -275,7 +280,7 @@
 <div class="md:col-span-12 lg:col-span-7">
 <div class="group cursor-pointer">
 <div class="overflow-hidden portfolio-img-wrap">
-<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 ease-in-out" src="img-portfolio-1.jpg"/>
+<img src="img-portfolio-1.jpg" alt="Appartement Haussmannien"/>
 </div>
 <div class="mt-8 flex justify-between items-start">
 <div>
