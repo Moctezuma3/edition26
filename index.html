@@ -595,7 +595,7 @@
 
     /* ── Tablet (768–1023px) : cartes un peu plus étroites ── */
     @media (min-width:768px) and (max-width:1023px) {
-      .srv-card { flex:0 0 3.5rem; min-height:22rem; }
+      .srv-card { flex:0 0 3.5rem; min-height:20rem; }
       .srv-card__open { padding:1.8rem 2rem; }
       .srv-card__open-title { font-size:1.3rem; }
       .srv-card__list li { font-size:.85rem; }
@@ -610,12 +610,13 @@
       .srv-card {
         flex:none !important;
         width:100%;
-        overflow:hidden;          /* garde le clip pour l'animation */
+        overflow:hidden;
+        min-height:0 !important;  /* écrase le min-height desktop (26rem) */
         max-height:58px;
         transition:max-height .45s cubic-bezier(.25,.46,.45,.94), box-shadow .3s;
       }
       .srv-card[active] {
-        max-height:600px;         /* valeur haute assez grande pour tout le contenu */
+        max-height:600px;
         box-shadow:0 8px 28px rgba(74,55,40,0.12);
       }
 
